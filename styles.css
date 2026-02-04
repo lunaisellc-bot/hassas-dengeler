@@ -1,0 +1,78 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Georgia, serif;
+}
+
+body {
+  background: #000;
+  color: #fff;
+  overflow: hidden;
+}
+
+.magazine {
+  height: 100vh;
+  overflow-y: scroll;
+  scroll-snap-type: y mandatory;
+}
+
+.page {
+  height: 100vh;
+  width: 100%;
+  scroll-snap-align: start;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.overlay {
+  background: rgba(0,0,0,0.6);
+  padding: 3rem;
+  max-width: 900px;
+  backdrop-filter: blur(6px);
+}
+
+.cover h1 {
+  font-size: 3.5rem;
+  letter-spacing: 0.2em;
+}
+
+.tagline {
+  margin-top: 1rem;
+  font-size: 1.2rem;
+  opacity: 0.9;
+}
+
+.intro {
+  margin-top: 1.5rem;
+  font-size: 1.1rem;
+  line-height: 1.7;
+}
+
+h2 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+h3 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  opacity: 0.85;
+}
+
+p {
+  line-height: 1.7;
+  font-size: 1.1rem;
+}
+
+blockquote {
+  margin-top: 2rem;
+  border-left: 3px solid #aaa;
+  padding-left: 1rem;
+  font-style: italic;
+  opacity: 0.9;
+}
