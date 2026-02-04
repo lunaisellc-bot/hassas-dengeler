@@ -3,54 +3,215 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hassas Dengeler | Dijital Dergi</title>
+    <title>HASSAS DENGELER | Sayı 01</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Lato:wght@300;400&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    
     <style>
-        body, html { margin: 0; padding: 0; height: 100%; overflow: hidden; font-family: 'Georgia', serif; }
-        .magazine-container {
+        /* --- GENEL AYARLAR --- */
+        :root {
+            --bg-color: #050505;
+            --text-color: #e0e0e0;
+            --accent-color: #d4af37; /* Altın */
+            --glass-bg: rgba(0, 0, 0, 0.65);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Lato', sans-serif;
+            overflow: hidden; /* Dış scroll barı gizle */
+        }
+
+        /* --- DERGİ İSKELETİ (SCROLL SNAP) --- */
+        .magazine-wrapper {
             height: 100vh;
             overflow-y: scroll;
-            scroll-snap-type: y mandatory;
+            scroll-snap-type: y mandatory; /* Sayfa sayfa atlama özelliği */
+            scroll-behavior: smooth;
         }
+
         section {
-            height: 100vh;
+            height: 100vh; /* Her bölüm tam ekran */
+            width: 100%;
             scroll-snap-align: start;
             position: relative;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: white;
-            text-align: center;
+            overflow: hidden;
+        }
+
+        /* --- ARKA PLAN GÖRSELLERİ İÇİN --- */
+        .bg-image {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
             background-size: cover;
             background-position: center;
+            z-index: -1;
+            filter: brightness(0.4); /* Metin okunsun diye karartma */
+            transition: transform 3s ease; /* Zoom efekti için */
         }
-        .content-box {
-            background: rgba(0, 0, 0, 0.6);
+        
+        section:hover .bg-image {
+            transform: scale(1.05); /* Mouse gelince hafif zoom */
+        }
+
+        /* --- İÇERİK KUTULARI --- */
+        .content {
+            max-width: 800px;
             padding: 40px;
-            max-width: 600px;
-            border-left: 4px solid #gold;
+            text-align: center;
+            z-index: 2;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1s forwards 0.5s; /* Giriş animasyonu */
         }
-        h1 { font-size: 3rem; margin-bottom: 10px; }
-        p { font-size: 1.2rem; line-height: 1.6; }
-        /* Kapak görseli buraya gelecek */
-        #cover { background-image: url('cover.jpg'); }
-        #kinesin { background-image: url('kinesin.jpg'); }
+
+        /* --- TİPOGRAFİ --- */
+        h1, h2 {
+            font-family: 'Cinzel', serif;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 20px;
+        }
+
+        h1 { font-size: 4rem; color: var(--accent-color); border-bottom: 2px solid var(--accent-color); display: inline-block; padding-bottom: 10px; }
+        h2 { font-size: 2.5rem; color: #fff; }
+        
+        p {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            font-weight: 300;
+            margin-bottom: 20px;
+            font-family: 'Playfair Display', serif; /* Dergi metni havası */
+        }
+
+        .category-tag {
+            font-size: 0.9rem;
+            color: var(--accent-color);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        /* --- NAVİGASYON (SAYFA NUMARALARI) --- */
+        .pagination {
+            position: fixed;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            z-index: 10;
+        }
+        .dot {
+            width: 10px; height: 10px;
+            background: rgba(255,255,255,0.3);
+            border-radius: 50%;
+            transition: all 0.3s;
+        }
+        .dot.active { background: var(--accent-color); transform: scale(1.3); }
+
+        /* --- ANİMASYON --- */
+        @keyframes fadeInUp {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* --- RESPONSIVE (MOBİL) --- */
+        @media (max-width: 768px) {
+            h1 { font-size: 2.5rem; }
+            h2 { font-size: 1.8rem; }
+            p { font-size: 1rem; }
+            .content { padding: 20px; width: 90%; }
+        }
     </style>
 </head>
 <body>
-    <div class="magazine-container">
-        <section id="cover">
-            <div class="content-box">
-                <h1>HASSAS DENGELER</h1>
-                <p>Kusursuz Düzenin Bilimi</p>
-                <span>Sayı 01 / 2026</span>
-            </div>
-        </section>
-        <section id="kinesin">
-            <div class="content-box">
-                <h2>Moleküler Motorlar</h2>
-                <p>Hücre içindeki nanometrik lojistik sistemleri ve kinesin proteinlerinin hayranlık uyandıran yürüyüşü.</p>
-            </div>
-        </section>
+
+    <div class="pagination">
+        <div class="dot active"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
     </div>
+
+    <div class="magazine-wrapper">
+        
+        <section id="page-1">
+            <div class="bg-image" style="background-image: url('https://images.unsplash.com/photo-1462331940025-496dfbfc7564?q=80&w=2000&auto=format&fit=crop');"></div>
+            <div class="content">
+                <span class="category-tag">SAYI 01 • BAŞLANGIÇ</span>
+                <h1>HASSAS DENGELER</h1>
+                <p style="font-style: italic; font-size: 1.4rem;">"Kusursuz Düzenin Bilimi"</p>
+                <div style="margin-top: 30px; font-size: 0.9rem; opacity: 0.8;">AŞAĞI KAYDIRIN ⇩</div>
+            </div>
+        </section>
+
+        <section id="page-2">
+            <div class="bg-image" style="background-image: url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2000&auto=format&fit=crop');"></div>
+            <div class="content" style="background: var(--glass-bg); border-left: 5px solid var(--accent-color);">
+                <h2>EDİTÖRDEN</h2>
+                <p>
+                    Modern bilim, evreni devasa bir veri seti olarak sunar. Ancak biz bu verilerde, soğuk rakamlardan ötesini; hayranlık uyandırıcı bir mimariyi görüyoruz.
+                </p>
+                <p>
+                    Bu dergi, atomun çekirdeğindeki güçlü nükleer kuvvetten, galaksilerin dansına kadar her noktada işleyen "ince ayarı" (fine-tuning) mercek altına alıyor.
+                </p>
+            </div>
+        </section>
+
+        <section id="page-3">
+            <div class="bg-image" style="background-image: url('https://images.unsplash.com/photo-1576086213369-97a306d36557?q=80&w=2000&auto=format&fit=crop');"></div>
+            <div class="content" style="text-align: left;">
+                <span class="category-tag">MİKRO KOZMOS: BİYOLOJİ</span>
+                <h2>HÜCREDEKİ LOJİSTİK</h2>
+                <p>
+                    Kinesin proteinleri... Sadece nanometre boyutunda olmalarına rağmen, hücre içindeki otoyollarda (mikrotübüller) sırtlarındaki yükle yürürler. 
+                    Trafik sıkışıklığı yok, kaza yok. Sadece matematiksel bir kesinlik.
+                </p>
+            </div>
+        </section>
+
+        <section id="page-4">
+            <div class="bg-image" style="background-image: url('https://images.unsplash.com/photo-1444703686981-a3abbc4d4fe3?q=80&w=2000&auto=format&fit=crop');"></div>
+            <div class="content">
+                <span class="category-tag">MAKRO KOZMOS: UZAY</span>
+                <h2>ALTIN ORAN VE YÖRÜNGELER</h2>
+                <p>
+                    Dünya'nın güneşe olan mesafesi %1 değişseydi, yaşam imkansız olurdu. Bu "Goldilocks Bölgesi" tesadüf mü, yoksa bir davetiye mi?
+                </p>
+            </div>
+        </section>
+
+    </div>
+
+    <script>
+        // Basit bir script: Hangi sayfadaysak yandaki noktayı aktif yapalım
+        const sections = document.querySelectorAll('section');
+        const dots = document.querySelectorAll('.dot');
+        const wrapper = document.querySelector('.magazine-wrapper');
+
+        wrapper.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                if (wrapper.scrollTop >= sectionTop - 100) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            dots.forEach((dot, index) => {
+                dot.classList.remove('active');
+                if (sections[index].getAttribute('id') === current) {
+                    dot.classList.add('active');
+                }
+            });
+        });
+    </script>
 </body>
 </html>
