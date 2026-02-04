@@ -2,125 +2,212 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <title>HASSAS DENGELER | Experience</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/GSAP.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HASSAS DENGELER | Digital Experience</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Cormorant+Garamond:ital,wght@0,300;0,600;1,400&family=Montserrat:wght@100;300;400&display=swap" rel="stylesheet">
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
     <style>
-        :root { --gold: #c5a059; --bg: #050505; }
-        body { background: var(--bg); color: white; margin: 0; font-family: 'Inter', sans-serif; overflow-x: hidden; }
-        
-        /* Tam Ekran Bölümler */
-        .panel {
-            height: 100vh; width: 100%;
-            display: flex; align-items: center; justify-content: center;
-            position: sticky; top: 0; overflow: hidden;
+        :root {
+            --gold: #c5a059;
+            --bg: #050505;
+            --text: #e0e0e0;
         }
 
-        /* Arka Plan Görselleri - Ultra Geniş */
-        .bg-layer {
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: 'Montserrat', sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* Yükleme Ekranı */
+        #loader {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: #000; z-index: 9999; display: flex; align-items: center; justify-content: center;
+        }
+        .loader-text { font-family: 'Cinzel'; letter-spacing: 10px; color: var(--gold); animation: pulse 2s infinite; }
+
+        @keyframes pulse { 0%, 100% { opacity: 0.3; } 50% { opacity: 1; } }
+
+        /* Main Wrapper */
+        .scroller { height: 100vh; overflow-y: auto; scroll-behavior: smooth; }
+
+        /* Panel Yapısı */
+        section {
+            height: 100vh; width: 100%;
+            position: relative;
+            display: flex; align-items: center;
+            justify-content: center;
+            padding: 5vw;
+            overflow: hidden;
+            border-bottom: 1px solid rgba(197, 160, 89, 0.1);
+        }
+
+        .bg-img {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             background-size: cover; background-position: center;
-            opacity: 0.4; transform: scale(1.2);
-            transition: transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+            opacity: 0.35; z-index: 0;
+            filter: saturate(0.5) brightness(0.7);
         }
 
-        /* Büyük Tipografi */
         .content {
-            z-index: 10; text-align: center; max-width: 900px;
+            position: relative; z-index: 10;
+            max-width: 1000px;
+            width: 100%;
+        }
+
+        /* Akademik Tipografi */
+        .category {
+            font-size: 0.7rem; letter-spacing: 8px; color: var(--gold);
+            text-transform: uppercase; margin-bottom: 20px; display: block;
         }
 
         h1 {
-            font-size: clamp(3rem, 10vw, 8rem);
-            font-weight: 900; letter-spacing: -5px;
-            margin: 0; line-height: 0.9;
-            text-transform: uppercase;
-            background: linear-gradient(180deg, #fff, #444);
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            font-family: 'Cinzel', serif;
+            font-size: clamp(2.5rem, 8vw, 6rem);
+            line-height: 0.9; margin-bottom: 30px;
+            font-weight: 700; letter-spacing: -2px;
         }
 
-        .subtitle {
-            font-size: 1rem; letter-spacing: 10px; color: var(--gold);
-            margin-top: 20px; display: block;
+        .academic-text {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(1.1rem, 2vw, 1.6rem);
+            line-height: 1.8; color: rgba(255,255,255,0.7);
+            max-width: 700px; text-align: justify;
+            border-left: 2px solid var(--gold);
+            padding-left: 30px;
         }
 
-        .description {
-            font-size: 1.2rem; opacity: 0.6; line-height: 1.8;
-            margin-top: 40px; max-width: 500px; margin-left: auto; margin-right: auto;
+        /* Navigasyon / Sayfa Numarası */
+        .nav-info {
+            position: fixed; bottom: 40px; left: 40px; z-index: 100;
+            font-family: 'Cinzel'; font-size: 0.8rem; color: var(--gold);
         }
 
-        /* İlerleme Çubuğu */
-        .progress-bar {
-            position: fixed; left: 0; top: 0; height: 3px;
-            background: var(--gold); width: 0%; z-index: 1000;
+        /* Progress Bar */
+        .progress-container {
+            position: fixed; top: 0; left: 0; width: 100%; height: 4px;
+            background: rgba(255,255,255,0.05); z-index: 1000;
         }
+        .progress-bar { height: 100%; background: var(--gold); width: 0%; }
+
     </style>
 </head>
 <body>
 
-<div class="progress-bar"></div>
+    <div id="loader"><div class="loader-text">HASSAS DENGELER</div></div>
 
-<section class="panel" id="hero">
-    <div class="bg-layer" style="background-image: url('https://images.unsplash.com/photo-1462331940025-496dfbfc7564?q=80&w=2000');"></div>
-    <div class="content">
-        <span class="subtitle">BİR TASARIM HARİKASI</span>
-        <h1>HASSAS<br>DENGELER</h1>
-        <p class="description">Varlığın her zerresinde işleyen, tesadüfü reddeden matematiksel mükemmellik.</p>
+    <div class="progress-container"><div class="progress-bar"></div></div>
+    
+    <div class="nav-info">VOL. 01 / 2026</div>
+
+    <div class="scroller">
+        
+        <section id="hero">
+            <div class="bg-img" style="background-image: url('https://images.unsplash.com/photo-1462331940025-496dfbfc7564?q=80&w=2000');"></div>
+            <div class="content">
+                <span class="category">Giriş • The Threshold</span>
+                <h1>HASSAS<br>DENGELER</h1>
+                <div class="academic-text">
+                    Modern astrofizik ve moleküler biyoloji verileri, evrenin başlangıcından bu yana süregelen rastlantısallık teorilerini ciddi bir ontolojik sorgulamaya tabi tutmaktadır. Bu dijital arşiv, bilginin hayrete dönüştüğü noktadır.
+                </div>
+            </div>
+        </section>
+
+        <section id="biology">
+            <div class="bg-img" style="background-image: url('https://images.unsplash.com/photo-1576086213369-97a306d36557?q=80&w=2000');"></div>
+            <div class="content">
+                <span class="category">Bölüm I • Moleküler Lojistik</span>
+                <h1>HÜCRESEL<br>MİMARİ</h1>
+                <div class="academic-text">
+                    Kinesin proteinleri, saniyede 100 adım atarak hücre içi yollarda kargo taşır. ATP hidrolizinden elde edilen enerjiyi mekanik işe dönüştürme verimliliği, tesadüfü reddeden kusursuz bir tasarımın somut kanıtıdır.
+                </div>
+            </div>
+        </section>
+
+        <section id="cosmos">
+            <div class="bg-img" style="background-image: url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2000');"></div>
+            <div class="content">
+                <span class="category">Bölüm II • Kozmik İnce Ayar</span>
+                <h1>EVRENSEL<br>SABİTLER</h1>
+                <div class="academic-text">
+                    Evrenin genişleme hızı veya yerçekimi sabiti, mevcut değerinden sadece $10^{60}$’da bir oranında sapma gösterseydi, madde hiçbir zaman yıldızları oluşturamazdı. Evren, yaşamı desteklemek üzere ayarlanmış bir 'mekan'dır.
+                </div>
+            </div>
+        </section>
+
+        <section id="physics">
+            <div class="bg-img" style="background-image: url('https://images.unsplash.com/photo-1550684848-fac1c5b4e853?q=80&w=2000');"></div>
+            <div class="content">
+                <span class="category">Bölüm III • Kuantum Gerçekliği</span>
+                <h1>MADDE VE<br>HİÇLİK</h1>
+                <div class="academic-text">
+                    Atomun %99.99'u boşluktur; ancak bu boşluk 'hiçlik' değil, kuvvet alanlarının muazzam dengesidir. Dokunduğumuz her şey, aslında görünmez ve matematiksel bir dengenin sonucudur.
+                </div>
+            </div>
+        </section>
+
     </div>
-</section>
 
-<section class="panel" id="biology">
-    <div class="bg-layer" style="background-image: url('https://images.unsplash.com/photo-1576086213369-97a306d36557?q=80&w=2000');"></div>
-    <div class="content">
-        <span class="subtitle">BİYOLOJİK MİMARİ</span>
-        <h1>MOLEKÜLER<br>MOTORLAR</h1>
-        <p class="description">Hücre içindeki kinesin proteinleri, saniyede 100 adım atarak yük taşır. Bu bir kaza değil, lojistik bir dehadır.</p>
-    </div>
-</section>
+    <script>
+        // Yükleme Ekranını Kaldır
+        window.addEventListener('load', () => {
+            gsap.to("#loader", { opacity: 0, duration: 1.5, onComplete: () => {
+                document.getElementById("loader").style.display = "none";
+            }});
+        });
 
-<section class="panel" id="cosmos">
-    <div class="bg-layer" style="background-image: url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2000');"></div>
-    <div class="content">
-        <span class="subtitle">KOZMİK NİZAM</span>
-        <h1>INCE<br>AYAR</h1>
-        <p class="description">Evrenin genişleme hızı 10^60'ta bir farklı olsaydı, şu an bu cümleyi okuyamıyor olurdunuz.</p>
-    </div>
-</section>
+        gsap.registerPlugin(ScrollTrigger);
 
-<script>
-    gsap.registerPlugin(ScrollTrigger);
+        // Her Bölüm İçin Paralaks ve İçerik Animasyonu
+        gsap.utils.toArray("section").forEach((section) => {
+            const bg = section.querySelector(".bg-img");
+            const content = section.querySelector(".content");
 
-    // Her panel için animasyon
-    gsap.utils.toArray(".panel").forEach((panel, i) => {
-        const bg = panel.querySelector(".bg-layer");
-        const content = panel.querySelector(".content");
+            // Arka Plan Paralaks (Kaydırdıkça yavaşça zoom yap)
+            gsap.to(bg, {
+                scale: 1.2,
+                scrollTrigger: {
+                    trigger: section,
+                    start: "top bottom",
+                    end: "bottom top",
+                    scrub: true
+                }
+            });
 
-        gsap.to(bg, {
-            scale: 1,
+            // Metin Giriş Animasyonu
+            gsap.from(content, {
+                opacity: 0,
+                y: 100,
+                duration: 1.2,
+                ease: "power4.out",
+                scrollTrigger: {
+                    trigger: section,
+                    start: "top 70%",
+                    toggleActions: "play none none reverse"
+                }
+            });
+        });
+
+        // Progress Bar Güncelleme
+        gsap.to(".progress-bar", {
+            width: "100%",
             scrollTrigger: {
-                trigger: panel,
-                start: "top bottom",
-                end: "top top",
-                scrub: true
+                scrub: 0.3,
+                trigger: "body",
+                start: "top top",
+                end: "bottom bottom"
             }
         });
 
-        gsap.from(content, {
-            y: 100, opacity: 0,
-            scrollTrigger: {
-                trigger: panel,
-                start: "top center",
-                end: "center center",
-                scrub: 1
-            }
-        });
-    });
-
-    // İlerleme Çubuğu
-    gsap.to(".progress-bar", {
-        width: "100%",
-        scrollTrigger: { scrub: 0.3 }
-    });
-</script>
-
+        // Arka Planda Hafif Ses Deneyimi (Opsiyonel: Kullanıcı Etkileşimi Şarttır)
+        // Bir buton ekleyerek bu aktifleştirilebilir.
+    </script>
 </body>
 </html>
