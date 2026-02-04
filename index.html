@@ -3,139 +3,129 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HASSAS DENGELER | Sayı 01</title>
+    <title>HASSAS DENGELER | Signature Collection</title>
     
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,900;1,6..96,400&family=Playfair+Display:ital,wght@0,400;0,900;1,400&family=Inter:wght@100;300;400&display=swap" rel="stylesheet">
 
     <style>
-        /* --- TEMEL AYARLAR --- */
         :root {
-            --paper-color: #fcfbf9; /* Gözü yormayan krem kağıt */
-            --ink-color: #1a1a1a;   /* Tam siyah değil, koyu gri */
-            --gold: #bd9b60;        /* Varak baskı rengi */
-            --caption-color: #666;
+            --gold: linear-gradient(135deg, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa771c);
+            --dark-gold: #8e6d13;
+            --paper: #f4f1ea;
+            --ink: #0f0f0f;
         }
 
         body {
-            background-color: #111; /* Masa rengi */
-            margin: 0;
-            padding: 0;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-family: 'Cormorant Garamond', serif; /* Ana metin fontu */
-            overflow: hidden;
+            background-color: #080808; /* Tamamen karanlık, odak dergide */
+            margin: 0; padding: 0; height: 100vh;
+            display: flex; justify-content: center; align-items: center;
+            overflow: hidden; cursor: crosshair;
         }
 
-        /* --- KİTAP YAPISI --- */
+        /* Dergi Kasası */
         .magazine-viewport {
-            width: 100%;
-            height: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            width: 100%; height: 100%;
+            perspective: 2000px;
+            display: flex; justify-content: center; align-items: center;
         }
 
         .container {
-            width: 1200px; /* Açık hali */
-            height: 800px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.8);
+            width: 1300px; /* Daha geniş, panoramik his */
+            height: 850px;
+            box-shadow: 0 50px 100px rgba(0,0,0,0.9);
         }
 
-        /* --- SAYFA STİLLERİ --- */
+        /* Sayfa Sanatı */
         .page {
-            background-color: var(--paper-color);
-            border: 1px solid #e0e0e0;
+            background-color: var(--paper);
+            border: none;
             overflow: hidden;
             position: relative;
         }
 
-        /* Kapak Stilleri */
-        .cover-page {
-            background-color: #000;
-            color: #fff;
+        /* Sayfa Dokusu (Paper Texture) */
+        .page::before {
+            content: ""; position: absolute; top:0; left:0; width:100%; height:100%;
+            background-image: url('https://www.transparenttextures.com/patterns/paper.png');
+            opacity: 0.3; pointer-events: none; z-index: 10;
         }
-        
-        .full-img {
+
+        /* Kapak Tasarımı - Avant-Garde Style */
+        .cover-page {
+            background: #000;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+        }
+
+        .cover-title {
+            font-family: 'Bodoni Moda', serif;
+            font-size: 6.5rem;
+            font-weight: 900;
+            background: var(--gold);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -2px;
+            line-height: 0.85;
+            text-align: center;
+            z-index: 5;
+        }
+
+        /* Modern Tipografi Düzeni */
+        .side-title {
+            position: absolute; left: 40px; top: 50%;
+            transform: rotate(-90deg) translateY(-50%);
+            font-family: 'Inter', sans-serif; font-weight: 100;
+            letter-spacing: 15px; text-transform: uppercase; font-size: 0.7rem;
+            color: var(--dark-gold);
+        }
+
+        /* Makale Sayfası - Minimalist Luxury */
+        .article-page {
+            padding: 80px;
+        }
+
+        .main-heading {
+            font-family: 'Bodoni Moda', serif;
+            font-size: 4rem;
+            font-style: italic;
+            margin-bottom: 40px;
+            border-left: 10px solid var(--dark-gold);
+            padding-left: 30px;
+            line-height: 1;
+        }
+
+        .article-text {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            line-height: 1.8;
+            color: var(--ink);
+            columns: 1; /* Tek sütun, daha lüks/kitap hissi */
+            max-width: 600px;
+        }
+
+        /* Sayfa Numarası - Minimalist */
+        .page-num {
+            position: absolute; bottom: 40px; right: 40px;
+            font-family: 'Inter', sans-serif; font-weight: 300;
+            font-size: 0.8rem; letter-spacing: 3px;
+        }
+
+        /* Görsel Sayfaları - Kenarsız (Bleed) */
+        .bleed-img {
             width: 100%; height: 100%;
             object-fit: cover;
-            position: absolute;
-            top: 0; left: 0;
-        }
-        
-        .overlay {
-            background: linear-gradient(to bottom, rgba(0,0,0,0.3), rgba(0,0,0,0.9));
-            position: absolute; top:0; left:0; width:100%; height:100%;
+            filter: contrast(1.1) grayscale(0.2);
+            transition: transform 10s ease-in-out;
         }
 
-        .cover-content {
-            position: relative; z-index: 2;
-            height: 100%; display: flex; flex-direction: column;
-            justify-content: space-between; padding: 40px; text-align: center;
-        }
+        .bleed-img:hover { transform: scale(1.1); }
 
-        /* Tipografi */
-        h1, h2, h3 { font-family: 'Cinzel', serif; text-transform: uppercase; margin: 0; }
-        
-        .magazine-title {
-            font-size: 4.5rem; letter-spacing: 10px; color: var(--gold);
-            text-shadow: 0 5px 15px rgba(0,0,0,0.5); border-bottom: 2px solid var(--gold);
-            display: inline-block; padding-bottom: 10px;
+        /* Floating Quotes */
+        .abstract-quote {
+            position: absolute; top: 15%; right: 10%; width: 300px;
+            font-family: 'Bodoni Moda', serif; font-size: 2rem;
+            font-style: italic; color: #fff; text-shadow: 0 10px 20px rgba(0,0,0,0.5);
+            z-index: 5; line-height: 1.2;
         }
-
-        .article-title {
-            font-size: 2.5rem; color: var(--ink-color); margin-bottom: 15px;
-            line-height: 1.1;
-        }
-
-        .article-subtitle {
-            font-family: 'Montserrat', sans-serif; font-size: 0.9rem;
-            color: var(--gold); letter-spacing: 2px; text-transform: uppercase;
-            margin-bottom: 20px; display: block; font-weight: bold;
-        }
-
-        p {
-            font-size: 1.15rem; line-height: 1.6; color: #2c2c2c;
-            text-align: justify; margin-bottom: 15px;
-        }
-
-        /* Dergi Düzeni (Sütunlar) */
-        .two-columns {
-            column-count: 2; column-gap: 40px;
-            text-align: justify;
-        }
-
-        .drop-cap {
-            float: left; font-size: 4.5rem; line-height: 0.8;
-            padding-right: 10px; padding-top: 5px; color: var(--gold);
-            font-family: 'Cinzel', serif;
-        }
-
-        .quote-box {
-            border-top: 1px solid var(--gold); border-bottom: 1px solid var(--gold);
-            padding: 20px 0; margin: 20px 0;
-            font-size: 1.4rem; font-style: italic; text-align: center;
-            color: #444; font-family: 'Cormorant Garamond', serif;
-        }
-
-        .page-number {
-            position: absolute; bottom: 20px; width: 90%;
-            display: flex; justify-content: space-between;
-            font-family: 'Montserrat', sans-serif; font-size: 0.7rem; color: #888;
-        }
-
-        /* Kontrol Butonları */
-        .controls {
-            position: absolute; bottom: 30px; z-index: 100;
-            display: flex; gap: 20px;
-        }
-        .btn {
-            background: var(--gold); border: none; padding: 10px 25px;
-            font-family: 'Cinzel', serif; cursor: pointer; color: #000; font-weight: bold;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3); transition: 0.3s;
-        }
-        .btn:hover { background: #fff; transform: translateY(-2px); }
 
     </style>
 </head>
@@ -145,157 +135,67 @@
         <div class="container" id="book">
 
             <div class="page cover-page" data-density="hard">
-                <img src="https://images.unsplash.com/photo-1462331940025-496dfbfc7564?q=80&w=1500" class="full-img">
-                <div class="overlay"></div>
-                <div class="cover-content">
-                    <div style="margin-top: 20px;">
-                        <span style="letter-spacing: 5px; font-family:'Montserrat'; font-size: 0.8rem;">SAYI 01 | 2026</span>
-                        <br>
-                        <h1 class="magazine-title">HASSAS<br>DENGELER</h1>
-                    </div>
-                    
-                    <div style="text-align: left; border-left: 4px solid var(--gold); padding-left: 20px;">
-                        <h2 style="font-size: 2rem;">MİKRODAN MAKROYA</h2>
-                        <p style="color: #ddd; font-size: 1.2rem;">Kusursuz Düzenin Bilimsel İspatı</p>
-                    </div>
-                </div>
+                <div class="side-title">PREMIER ISSUE 2026</div>
+                <h1 class="cover-title">HASSAS<br>DENGELER</h1>
+                <div style="margin-top: 50px; width: 60px; height: 1px; background: var(--dark-gold);"></div>
+                <p style="color: #666; font-family: 'Inter'; letter-spacing: 5px; margin-top: 20px; font-size: 0.8rem;">THE SCIENCE OF DIVINE ORDER</p>
             </div>
 
-            <div class="page" style="background: #111; color: #fff;">
-                <div style="height:100%; display:flex; justify-content:center; align-items:center; text-align:center; padding:50px;">
-                    <div>
-                        <p style="font-style:italic; color:#888;">"Gökleri ve yeri hak ile yarattı..."</p>
-                        <h3 style="color:var(--gold); margin-top:20px;">TESADÜF YOKTUR</h3>
-                        <p style="color:#aaa; font-size:0.9rem; margin-top:10px;">Sadece henüz keşfetmediğimiz matematik vardır.</p>
-                    </div>
+            <div class="page" style="background-color: #0f0f0f; color: white;">
+                <div style="padding: 100px; display: flex; flex-direction: column; justify-content: center; height: 100%;">
+                    <span style="color: var(--dark-gold); font-family: 'Inter'; letter-spacing: 5px;">01. MANİFESTO</span>
+                    <h2 style="font-family: 'Bodoni Moda'; font-size: 3.5rem; margin: 30px 0;">Sessizliğin Matematiği.</h2>
+                    <p style="font-family: 'Playfair Display'; font-size: 1.5rem; opacity: 0.7; line-height: 1.6;">
+                        Bizler, verinin ötesine, anlamın derinliğine bakıyoruz. 
+                        Bu dergi bir savunma değil, bir seyir defteridir. 
+                        Varlığın muazzam korosundaki o kusursuz notaları duymak isteyenler için.
+                    </p>
                 </div>
             </div>
 
             <div class="page">
-                <div style="padding: 50px;">
-                    <span class="article-subtitle">EDİTÖRYAL</span>
-                    <h2 class="article-title">Kaos Teorisinin Çöküşü</h2>
-                    <div class="two-columns">
-                        <p><span class="drop-cap">M</span>odern bilim, uzun süre evrenin rastgele çarpışmalar sonucu oluştuğunu savundu. Ancak teleskoplarımız derin uzaya, mikroskoplarımız ise hücrenin derinliklerine indikçe bu teori sarsılmaya başladı.</p>
-                        <p>Bugün karşımızda duran tablo "kaos" değil, akıl almaz bir "kozmos" yani düzendir. Bir proteinin doğru katlanma ihtimalinden, evrensel yerçekimi sabitinin (G) hassasiyetine kadar her veri, bilinçli bir tasarımı haykırmaktadır.</p>
-                        <p>Bu dergi, bilimsel verileri tefekkür süzgecinden geçirerek sizlere sunmak için tasarlandı. Hoş geldiniz.</p>
-                    </div>
-                    <div style="margin-top:40px; text-align:right;">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/e/e4/Signature_sample.svg" width="150" style="opacity:0.7;">
-                        <p style="margin:0; font-size:0.9rem;">Genel Yayın Yönetmeni</p>
-                    </div>
+                <img src="https://images.unsplash.com/photo-1614850523296-d8c1af93d400?q=80&w=2000" class="bleed-img">
+                <div class="abstract-quote">"Nanometrik bir adım, sonsuz bir irade."</div>
+            </div>
+
+            <div class="page article-page">
+                <span style="font-family: 'Inter'; letter-spacing: 4px; color: var(--dark-gold); font-size: 0.7rem;">CHAPTER I: MOLECULAR BIOLOGY</span>
+                <h2 class="main-heading">Kinesin:<br>Hücrenin Görünmez Hamalları.</h2>
+                <div class="article-text">
+                    <p>Moleküler biyolojinin en büyüleyici keşiflerinden biri olan Kinesin motor proteinleri, biyolojik sistemlerin tesadüfe yer bırakmayan mimarisini kanıtlar niteliktedir.</p>
+                    <p>Hücre içindeki mikrotübül yolları üzerinde, kargosunu bir uçtan diğer uca taşıyan bu proteinler, saniyede 80 nanometre yol kateder. Bu ölçekteki bir hareketin, saniyede 1000 kez ATP hidrolizi gerektirmesi, sistemin enerjisel verimliliğinin kusursuzluğunu ortaya koyar.</p>
                 </div>
-                <div class="page-number"><span>SAYFA 03</span><span>EDİTÖR</span></div>
+                <div class="page-num">04 — HASSAS DENGELER</div>
             </div>
 
             <div class="page">
-                <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=1000" class="full-img" style="opacity:0.1;">
-                <div style="padding: 50px; position:relative; z-index:2;">
-                    <h2 class="article-title" style="text-align:center;">İÇİNDEKİLER</h2>
-                    <ul style="list-style:none; padding:0; margin-top:40px;">
-                        <li style="border-bottom:1px solid #ddd; padding:15px 0; display:flex; justify-content:space-between; font-family:'Cinzel'; font-size:1.2rem;">
-                            <span>05 • HÜCRESEL LOJİSTİK</span> <span>BİYOLOJİ</span>
-                        </li>
-                        <li style="border-bottom:1px solid #ddd; padding:15px 0; display:flex; justify-content:space-between; font-family:'Cinzel'; font-size:1.2rem;">
-                            <span>09 • KOZMİK İNCE AYAR</span> <span>KOZMOLOJİ</span>
-                        </li>
-                        <li style="border-bottom:1px solid #ddd; padding:15px 0; display:flex; justify-content:space-between; font-family:'Cinzel'; font-size:1.2rem;">
-                            <span>13 • ATOM ALTI DÜNYA</span> <span>KUANTUM FİZİĞİ</span>
-                        </li>
-                        <li style="border-bottom:1px solid #ddd; padding:15px 0; display:flex; justify-content:space-between; font-family:'Cinzel'; font-size:1.2rem;">
-                            <span>15 • SONUÇ & KAYNAKÇA</span> <span>AKADEMİK</span>
-                        </li>
-                    </ul>
-                </div>
-                <div class="page-number"><span>SAYFA 04</span><span>INDEX</span></div>
+                <img src="https://images.unsplash.com/photo-1462332420958-a05d1e002413?q=80&w=2000" class="bleed-img">
+                <div class="abstract-quote" style="top: 60%; left: 10%;">Gökleri, bir ölçüye göre nizam eden.</div>
             </div>
 
-            <div class="page">
-                <img src="https://images.unsplash.com/photo-1576086213369-97a306d36557?q=80&w=1500" class="full-img">
-                <div class="overlay" style="background: rgba(0,0,0,0.4);"></div>
-                <div style="position:absolute; bottom:50px; left:50px; color:white; width:80%;">
-                    <span class="article-subtitle" style="color:var(--gold);">MİKRO DÜNYA</span>
-                    <h2 style="font-size:3.5rem; line-height:1;">KİNESİN:<br>YÜRÜYEN PROTEİN</h2>
+            <div class="page article-page">
+                <span style="font-family: 'Inter'; letter-spacing: 4px; color: var(--dark-gold); font-size: 0.7rem;">CHAPTER II: ASTROPHYSICS</span>
+                <h2 class="main-heading">Hassas Ayar:<br>Kozmik İnce Ayar Teorisi.</h2>
+                <div class="article-text">
+                    <p>Eğer evrendeki yerçekimi kuvveti sabit olsaydı ama sadece $10^{60}$ oranında bir sapma gösterseydi, ne yıldızlar ne de bizler burada olabilirdik.</p>
+                    <p>Sir Fred Hoyle'un deyimiyle, "Evrenin fizik kuralları üzerine devasa bir zeka oyun oynamış gibidir." Bu, matematiksel olarak 'imkansız' olanın 'vuku bulduğu' bir varoluş sahnesidir.</p>
                 </div>
-                <div class="page-number" style="color:white;"><span>SAYFA 05</span><span>BİYOLOJİ</span></div>
-            </div>
-
-            <div class="page">
-                <div style="padding: 50px;">
-                    <p class="drop-cap">H</p>
-                    <p>ücrelerimiz sessiz değildir. Tam şu anda, vücudunuzdaki trilyonlarca hücrenin içinde, insan yapımı otoyolları kıskandıracak bir trafik akmaktadır. Bu trafiğin baş aktörü: <strong>Kinesin Motor Proteinleri.</strong></p>
-                    
-                    <p>Kinesin, mikrotübül adı verilen hücre iskeleti üzerinde yürüyen bir moleküler motordur. "Yürümek" kelimesini mecazen kullanmıyoruz; iki "ayağı" vardır ve ATP (Adenozin Trifosfat) moleküllerini yakıt olarak kullanarak adım atar.</p>
-
-                    <h3 style="font-size:1.2rem; margin-top:20px;">AKIL ALMAZ İSTATİSTİKLER</h3>
-                    <p>Bir kinesin molekülü, saniyede yaklaşık 100 adım atar. Her adımı tam olarak 8 nanometredir. Bu, bir insanın saniyede 600 metre koşmasına denk gelen ölçekli bir hızdır.</p>
-
-                    <div class="quote-box">
-                        "Kinesin, kargosunu (vezikülü) hedefe bıraktıktan sonra geri dönmez, parçalanır. Bu, tek kullanımlık bir lojistik mucizesidir."
-                    </div>
-
-                    <p>Bu sistemde trafik ışığı, polis veya GPS yoktur. Ancak milyarlarca kinesin, aynı anda, birbirine çarpmadan, tam vaktinde doğru organele malzemeyi teslim eder. Bu organizasyonun kökeni "evrimsel deneme-yanılma" ile açıklanamayacak kadar komplekstir (indirgenemez komplekslik).</p>
-                </div>
-                <div class="page-number"><span>SAYFA 06</span><span>MOLEKÜLER BİYOLOJİ</span></div>
-            </div>
-
-            <div class="page" style="background:#050505; color:white;">
-                <img src="https://images.unsplash.com/photo-1464802686167-b939a6910659?q=80&w=1500" class="full-img">
-                <div class="overlay"></div>
-                <div style="position:relative; z-index:2; padding:50px; text-align:center; top:30%;">
-                    <h2 style="font-size:3rem; color:white;">ALTIN ORAN VE<br>EVRENİN SABİTLERİ</h2>
-                    <p style="color:#ccc;">"Güneş ve Ay bir hesap iledir." (Rahman, 5)</p>
-                </div>
-                 <div class="page-number" style="color:#666;"><span>SAYFA 07</span><span>KOZMOLOJİ</span></div>
-            </div>
-
-            <div class="page">
-                <div style="padding: 50px;">
-                    <span class="article-subtitle">HASSAS AYAR (FINE TUNING)</span>
-                    <h2 class="article-title">10 Üzeri 120'de Bir İhtimal</h2>
-                    <div class="two-columns">
-                        <p>Evrenin var olabilmesi için belirli fiziksel sabitlerin (yerçekimi, elektromanyetik kuvvet, zayıf ve güçlü nükleer kuvvet) çok hassas değerlerde olması gerekir.</p>
-                        <p>Örneğin, evrenin genişleme hızı Büyük Patlama'dan (Big Bang) sonra <strong>$10^{18}$</strong> (milyar kere milyar) saniyede bir oranda farklı olsaydı, evren ya içine çökerdi ya da galaksiler oluşmadan dağılırdı.</p>
-                        <p>Roger Penrose, evrenin başlangıcındaki düzenin (düşük entropi) tesadüfen oluşma ihtimalini şöyle hesaplamıştır: <strong>$10^{10^{123}}$'de bir.</strong> Bu sayıyı evrendeki tüm atomların üzerine sıfır yazsak bile ifade edemeyiz.</p>
-                        <p>Bu matematiksel imkansızlık, ateistik materyalizmin "rastlantı" iddiasını bilimsel olarak geçersiz kılmaktadır.</p>
-                    </div>
-                </div>
-                <div class="page-number"><span>SAYFA 08</span><span>ASTROFİZİK</span></div>
-            </div>
-
-            <div class="page cover-page" data-density="hard">
-                <div style="height:100%; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center;">
-                    <h2 style="color:var(--gold); font-size:2.5rem;">HASSAS DENGELER</h2>
-                    <p style="max-width:400px; margin:20px auto; color:#888;">Bilim, yaratılışın sanatını keşfetme yolculuğudur.</p>
-                    <div style="margin-top:50px; border:1px solid #333; padding:20px;">
-                        <p style="font-family:'Montserrat'; font-size:0.8rem; margin:0; color:#555;">DİJİTAL SÜRÜM 1.0</p>
-                        <img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=HassasDengeler" style="margin-top:10px; opacity:0.5;">
-                    </div>
-                </div>
+                <div class="page-num">06 — HASSAS DENGELER</div>
             </div>
 
         </div>
-    </div>
-
-    <div class="controls">
-        <button class="btn" onclick="pageFlip.flipPrev()">❮ ÖNCEKİ</button>
-        <button class="btn" onclick="pageFlip.flipNext()">SONRAKİ ❯</button>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/page-flip/dist/js/page-flip.browser.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const pageFlip = new St.PageFlip(document.getElementById('book'), {
-                width: 600, // Tek sayfa genişliği
-                height: 800,
+                width: 650, height: 850,
                 size: 'stretch',
-                minWidth: 300,
-                maxWidth: 1000,
-                minHeight: 400,
-                maxHeight: 1200,
-                maxShadowOpacity: 0.5,
+                maxShadowOpacity: 0.2,
                 showCover: true,
-                mobileScrollSupport: false
+                usePortrait: false,
+                flippingTime: 1200 // Daha yavaş, daha ağır sayfa hissi
             });
             pageFlip.loadFromHTML(document.querySelectorAll('.page'));
             window.pageFlip = pageFlip;
