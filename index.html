@@ -1,46 +1,56 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>HASSAS DENGELER — Kusursuz Düzenin Bilimi</title>
-  <link rel="stylesheet" href="styles.css"/>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hassas Dengeler | Dijital Dergi</title>
+    <style>
+        body, html { margin: 0; padding: 0; height: 100%; overflow: hidden; font-family: 'Georgia', serif; }
+        .magazine-container {
+            height: 100vh;
+            overflow-y: scroll;
+            scroll-snap-type: y mandatory;
+        }
+        section {
+            height: 100vh;
+            scroll-snap-align: start;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-align: center;
+            background-size: cover;
+            background-position: center;
+        }
+        .content-box {
+            background: rgba(0, 0, 0, 0.6);
+            padding: 40px;
+            max-width: 600px;
+            border-left: 4px solid #gold;
+        }
+        h1 { font-size: 3rem; margin-bottom: 10px; }
+        p { font-size: 1.2rem; line-height: 1.6; }
+        /* Kapak görseli buraya gelecek */
+        #cover { background-image: url('cover.jpg'); }
+        #kinesin { background-image: url('kinesin.jpg'); }
+    </style>
 </head>
 <body>
-
-  <main class="magazine">
-
-    <!-- Kapak -->
-    <section class="page cover" style="background-image:url('assets/cover.jpg')">
-      <div class="overlay">
-        <h1>HASSAS DENGELER</h1>
-        <p class="tagline">Kusursuz Düzenin Bilimi</p>
-        <p class="intro">
-          Biyoloji, fizik ve matematikte ölçülebilen düzenin,
-          yaratılışın mimarisine işaret ettiği bir dijital dergi.
-        </p>
-      </div>
-    </section>
-
-    <!-- İnsan Bedeni / Kinesin -->
-    <section class="page" style="background-image:url('assets/kinesin.jpg')">
-      <div class="overlay">
-        <h2>İnsan Bedeninde Hassas Dengeler</h2>
-        <h3>Moleküler Motorlar: Kinesin</h3>
-        <p>
-          İnsan hücrelerinde kinesin motor proteinleri, mikrotübüller boyunca
-          nanometre ölçeğinde adımlar atarak yük taşır. Bu sistemler,
-          ATP hidrolizi ile çalışan ve en küçük sapmada işlevini kaybeden
-          hassas biyomoleküler yapılardır.
-        </p>
-        <blockquote>
-          “Biz her şeyi bir ölçü ile yarattık.” (Kamer, 49)
-        </blockquote>
-      </div>
-    </section>
-
-  </main>
-
-  <script src="script.js"></script>
+    <div class="magazine-container">
+        <section id="cover">
+            <div class="content-box">
+                <h1>HASSAS DENGELER</h1>
+                <p>Kusursuz Düzenin Bilimi</p>
+                <span>Sayı 01 / 2026</span>
+            </div>
+        </section>
+        <section id="kinesin">
+            <div class="content-box">
+                <h2>Moleküler Motorlar</h2>
+                <p>Hücre içindeki nanometrik lojistik sistemleri ve kinesin proteinlerinin hayranlık uyandıran yürüyüşü.</p>
+            </div>
+        </section>
+    </div>
 </body>
 </html>
